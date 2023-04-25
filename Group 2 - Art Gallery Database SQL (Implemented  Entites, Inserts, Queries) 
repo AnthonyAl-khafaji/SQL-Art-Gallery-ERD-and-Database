@@ -1,0 +1,528 @@
+﻿use master;
+go
+drop database ArtGallery;
+go
+create database ArtGallery;
+go
+use ArtGallery;
+go
+
+
+----------------------------------------------Entity1-----------------------
+
+create table person(  
+  PersonID         int,  
+  FirstName        char(15)          not null,
+  LastName         char(15)          not null,
+  Address          char(25)          not null,
+  Zip              char(9)           not null,
+  City             char(20)          not null,
+  State            char(2)           not null           default 'MI',
+  PhoneNum         char(12),
+  Email            Varchar(20)       not null,
+  PersonType       char(3)           not null           default 'CUS',
+--constraints
+--primary key
+  constraint person_personid_pk primary key(PersonID)
+);
+---------------------inserting people--------------------
+
+insert into person 
+	(PersonID, FirstName, LastName, Address, Zip, City, State, PhoneNum, Email, PersonType)
+values
+	(1,'Lawrie','Shaun','1800 Croft RD','48009','Birmingham','MI','2312020032','lshaun@gmail.com','CUS'),
+	(2,'Brenna','Weston','3600 N Center RD','48601','Saginaw','MI','9892010809','bweston@gmail.com','CUS'),
+	(3,'Hannah','Ely','2335 Twin Lakes DR','48197','Ypsilanti','MI','7342090644','hely@gmail.com','CUS'),
+	(4,'Emmett','Curtis','5201 Connor ST','48127','Detroit','MI','2488357854','ecurtis@gmail.com','CUS'),
+	(5,'Levi','Phillip','45001 Hecker DR','48317','Utica','MI','5868561281','lpillip@gmail.com','EMP'),
+	(6,'Kimberley','Davin','721 College AVE','49422','Holland','MI','6165189828','kdavin@gmail.com','EMP'),
+	(7,'Garrett','Alger','400 Delta RD','48623','Freeland','MI','9895733694','galger@gmail.com','EMP'),
+	(8,'Amber','Elroy','301 Woodrow ST','44701','Canton','OH','2342143481','aelroy@gmail.com','ART'),
+	(9,'Lucas','Warner','4801 Dunhill RD','48310','Sterling Heights','MI','9896541097','lwarner@gmail.com','ART'),
+	(10,'Julianna','Mathew','12585 Church ST','49245','Birch Run','MI','9892447074','jmathew@gmail.com','ART'),
+	(11,'Dylan','Dennis','9000 23 Mile RD','48009','Homer','MI','5174187010','ddennis@gmail.com','CUS'),
+	(12,'Tia','Bertram','200 Circle DR','61550','Morton','IL','3092631606','tbertram@gmail.com','CUS'),
+	(13,'Trent','Irwin','152 N Washington ST','48872','Perry','MI','5176253207','tirwin@gmail.com','CUS'),
+	(14,'Hellen','Marcus','27500 Franklin RD','48033','Southfield','MI','2482009433','hmarcus@gmail.com','CUS'),
+	(15,'Miranda','Aleta','31 N Erie ST','43537','Toledo','OH','4192058760','maleta@gmail.com','CUS'),
+	(16,'Brendan','Tobin','3360 N Linden RD','48501','FLint','MI','8102042186','btobin@gmail.com','CUS'),
+	(17,'Page','Olivia','4940 Ternes ST','48124','Dearborn','MI','3132060543','polivia@gmail.com','EMP'),
+	(18,'Elliott','Ferdinand','1500 Sunnyside AVE','48911','Lansing','MI','3363843697','eferdinand@gmail.com','EMP'),
+	(19,'Mark','Newton','309 Maynard ST','48103','Ann Arbor','MI','7342057637','mnewton@gmail.com','EMP'),
+	(20,'Todd','Kerry','56500 Cardinal DR','48042','Macomb','MI','9896548849','tkerry@gmail.com','EMP'),
+	(21,'Shelly','Riley','34400 Phyllis ST','48184','Wayne','MI','3136142771','sriley@gmail.com','EMP'),
+	(22,'Arnold','Francis','1300 W McMillan RD','49445','Muskegon','MI','2312060492','afrancis@gmail.com','EMP'),
+	(23,'Levi','Phillip','45001 Hecker DR','48317','Utica','MI','5868561281','lpillip@gmail.com','EMP'),
+	(24,'Martin','Cynthia','952 Chatham LN','43004','Columbus','OH','6142095301','mcynthia@gmail.com','ART'),
+	(25,'Summer','Clair','1221 Michigan AVE','48706','Bay City','MI','9893852948','sclair@gmail.com','ART'),
+	(26,'Joelle','Adella','4020 S Mill RD','48428','Dryden','MI','8103156159','jadella@gmail.com','ART'),
+	(27,'Lyda','Oliver','8301 Beechwood AVE','46077','Indianapolis','IN','3172006229','loliver@gmail.com','ART'),
+	(28,'Erin','Blaine','200 Weeks AVE','49014','Battle Creek','MI','2692093579','eblaine@gmail.com','ART'),
+	(29,'Brook','Cara','20773 Camden SQ','48033','Southfield','MI','2483024127','bcara@gmail.com','ART'),
+	(30,'Hudson','Lindsey','1201 Markey DR','43506','Bryan','OH','4196368983','hlindsey@gmail.com','ART');
+go 
+select *
+from  person;
+
+----------------------------------------------Entity2-----------------------
+
+create table employee(
+  EmployeeID         int,  
+  SSN                char(9)           not null,
+  DoB                Date              not null,
+  HireDate           Date              not null,
+  TermDate           Date,
+--constraints
+--primary key
+  constraint employee_employeeid_pk primary key(EmployeeID),
+--foreign keys
+  constraint employee_employeeid_fk foreign key (EmployeeID) references person(PersonID)
+      on update cascade
+      on delete no action,
+--Unique
+  constraint employee_ssn_uk unique(SSN)
+);
+---------------------inserting employees--------------------
+
+insert into employee
+	(EmployeeID, SSN, DoB, HireDate, TermDate)
+values
+	(5,381828331, '1993-12-07', '2020-12-01', NULL),
+	(6,380399788, '1966-04-24', '2019-12-26', '2022-11-15'),
+	(7,386246723,'1983-05-09','2021-07-23', NULL),
+	(17,369739610, '1984-03-01', '2021-04-20', '2022-11-14'),
+	(18,380088623, '1997-01-10', '2021-07-23', NULL),
+	(19,368481593, '1991-11-16', '2021-12-21', NULL),
+	(20,383308964, '1978-12-03', '2022-03-09', NULL),
+	(21,377811514, '1968-10-20', '2019-11-29', NULL),
+	(22,378284342, '2002-04-22', '2022-12-23', NULL),
+	(23,377878975, '1981-09-10', '2020-09-25', NULL);
+go
+select *
+from  employee;
+
+----------------------------------------------Entity3-----------------------
+
+create table customer(
+  CustomerID         int,  
+  RegisterDate       Date              not null,
+--constraints
+--primary key
+  constraint customer_customerid_pk primary key(CustomerID),
+--foreign keys
+  constraint customer_customerid_fk foreign key (CustomerID) references person(PersonID)
+      on update cascade
+      on delete no action
+);
+---------------------inserting customers--------------------
+
+insert into customer
+	(CustomerID, RegisterDate)
+values
+	(1, '2022-03-09'),
+	(2, '2021-01-07'),
+	(3, '2022-03-28'),
+	(4, '2020-09-15'),
+	(11, '2021-03-26'),
+	(12, '2021-01-07'),
+	(13, '2022-12-20'),
+	(14, '2022-06-27'),
+	(15, '2022-02-16'),
+	(16, '2021-06-18');
+go
+select *
+from  customer;
+
+----------------------------------------------Entity4-----------------------
+
+create table artist(
+  ArtistID         int,  
+  ArtistSince      Date              not null,
+
+--constraints
+--primary key
+  constraint artist_artistid_pk primary key (ArtistID),
+--foreign keys
+  constraint artist_artistid_fk foreign key (ArtistID) references person(PersonID)
+      on update cascade
+      on delete no action
+);
+---------------------inserting artists--------------------
+
+insert into artist
+	(ArtistID, ArtistSince)
+values
+	(8, '2000-07-25'),
+	(9, '2000-06-20'),
+	(10, '2007-10-05'),
+	(25, '1989-05-19'),
+	(26, '2009-08-18'),
+	(27, '2005-05-19'),
+	(28, '2004-10-20'),
+	(29, '2003-11-25'),
+	(30, '2003-05-21'),
+	(24, '2000-11-02');
+go
+select *
+from  artist;
+
+----------------------------------------------Entity5-----------------------
+ 
+create table customerorder(
+  OrderID         int,
+  OrderDate       Date              not null,
+  OrderTime       Time              not null,
+  CustomerID      int               not null,
+  EmployeeID      int               not null,
+--constraints
+--primary key  
+  constraint customerorder_orderid_pk primary key (OrderID),
+--foreign keys
+  constraint customerorder_customerid_fk foreign key (CustomerID) references customer(CustomerID),
+  constraint customerorder_employeeid_fk foreign key (EmployeeID) references employee(EmployeeID)
+);
+
+---------------------inserting customer orders--------------------
+ 
+insert into customerorder
+	(OrderID, OrderDate, OrderTime, CustomerID, EmployeeID)
+values
+	(100, '2021-11-29', '11:01:22', 15, 5),
+	(101, '2022-05-19', '08:27:06', 11, 18),
+	(102, '2022-07-08', '14:50:00', 12, 19),
+	(103, '2022-08-22', '14:55:45', 13, 20),
+	(104, '2022-11-25', '10:50:30', 14, 6),
+	(105, '2022-08-15', '12:35:22', 15, 19),
+	(106, '2022-02-07', '12:50:33', 16, 20),
+	(107, '2021-12-08', '13:35:10', 2, 21),
+	(108, '2021-11-24', '14:20:10', 3, 22),
+	(109, '2022-07-27', '14:30:23', 4, 23);
+
+go
+select *
+from customerorder;
+
+----------------------------------------------Entity6-----------------------
+ 
+create table medium(
+  MediumID         int,
+  Name             char(15),
+  StartDate        Date              not null,
+  EndDate          Date              not null,
+  Description      Varchar(50)       not null,
+--constraints
+--primary key
+  constraint medium_mediumid_pk primary key(MediumID),
+);
+
+----------inserting mediums statements-----
+
+insert into medium
+	(MediumID, Name, StartDate, EndDate, Description)
+values
+	(200, 'Watercolor', '2010-11-01', '2011-01-01', 'Water-activated paint. 2D'), 
+	(201, 'Oil', '2015-08-15', '2016-01-01', 'Oil based paint. 2D'),
+	(202, 'Digital Art', '2016-01-01', '2017-01-01', 'Digital based medium. 2D and 3D'),
+	(203, 'Clay Sculpting', '2005-10-22', '2006-01-01', 'Clay based medium. 3D'),
+	(204, 'Graphite', '2018-09-07', '2019-01-01', 'Soft shading and outlining. 2D'),
+	(205, 'Charcoal', '2011-03-27', '2012-01-01', 'Light and shadows. 2D'),
+	(206, 'Pastels', '2009-07-17', '2010-01-01', 'Colorful shading and outlining. 2D'),
+	(207, 'Ink and Pen', '2011-08-06', '2012-01-01', 'Solid Shading and outlining. 2D'),
+	(208, 'Acrylic', '2008-12-12', '2019-01-01', 'Liquid Layered Paint. 2D'), 
+	(209, 'Chalk', '2017-10-03', '2018-01-01', 'Soft limestone. 2D'), 
+	(210, 'Tempera', '2012-05-17', '2013-01-01', 'Fast drying paint. 2D');
+
+go
+select *
+from medium;
+
+----------------------------------------------Entity7-----------------------
+
+create table category(
+  CategoryID       int,
+  Name             char(15)          not null,
+  Description      varchar(50)       not null,
+
+--constraints
+--primary key
+  constraint category_categoryid_pk primary key(CategoryID),
+);
+
+--------category inserts----------
+
+insert into category
+	(CategoryID, Name, Description)
+values
+	(300, 'Walled Display', 'Requires framing and designated wallspace'),
+	(301, 'Stand Display', 'Requires a stand and designated floorspace');
+
+go
+select *
+from category;
+
+----------------------------------------------Entity8-----------------------
+
+create table item(
+  itemID         int,
+  Name           char(15),
+  Description    Varchar(50)       not null,
+  Price          decimal(9,2),
+  Quantity       int, 
+  MediumID       int,
+  CategoryID     int,
+--constraints
+--primary key
+  constraint item_itemid_pk primary key(itemID),
+--foreign keys
+  constraint item_mediumid_fk foreign key (MediumID) references medium(MediumID)
+      on update cascade
+      on delete no action,
+  constraint item_categoryid_fk foreign key (CategoryID) references category(CategoryID)
+      on update cascade
+      on delete no action,
+--check keys
+  constraint item_quantity_ck check(Quantity>0),
+  constraint item_price_ck check(Price>0)
+);
+
+----------item inserts---------------------
+
+insert into item
+	(ItemID, Name, Description, Price, Quantity, MediumID, CategoryID)
+values
+	(400, 'Brilliant Gem', 'Watercolor Gem painting', 3000.15, 1, 200, 300),
+	(401, 'Forlorn Man', 'Self portrait', 255, 1, 204, 300), 
+	(402, 'Cobalt Sky', 'Surrealist painting of the sky', 990, 1, 208, 300),
+	(403, 'An Empty Shell', 'Clay sculpture of a tortoise shell', 2450, 1, 203, 301), 
+	(404, 'Crystal Vase', 'Painted vase', 1200.50, 1, 203, 301), 
+	(405, 'Golden Mountain', 'Snowcapped mountain with sunrise painting', 500, 1, 201, 300), 
+	(406, 'Brown eye', 'Self portrait', 789, 1, 204, 300), 
+	(407, 'The Conundrum', 'Realistic graphite sketch', 180.20, 1,  204, 300), 
+	(408, 'Sugar Wheel', 'Vibrant chalk art depicting ferris wheel', 470.12, 1, 209, 300),
+	(409, 'Jolly Band', 'Largescale Pastel painting of a marching band', 500.35, 1, 206, 300), 
+	(410, 'Plastic girl', 'Paper and tempura 3D model', 1500, 1, 210, 301), 
+	(411, 'Clown', 'Ink and pen drawing of a sad clown', 470, 1, 207, 300),
+	(412, 'Vandal', 'vandalized car in black and white', 210.50, 1, 204, 300);
+
+
+go
+select *
+from item;
+
+----------------------------------------------Entity9-----------------------
+ 
+create table order_item(
+  orderID         int,
+  itemID          int,
+  Quantity        int               not null,  
+  Price           decimal(9,2)      not null,  
+--constraints
+--primary key
+  constraint orderitem_orderitemid_pk primary key(orderID, itemID),
+--check keys
+  constraint orderitem_quantity_ck check(Quantity>0),
+  constraint orderitem_price_ck check(Price>0),
+--foreign keys
+  constraint orderitem_orderid_fk foreign key (orderID) references customerorder(orderID)
+      on update cascade
+      on delete no action,
+  constraint orderitem_itemid_fk foreign key (itemID) references item(itemID)
+      on update cascade
+      on delete no action,
+);
+
+----insert order item---
+ 
+
+insert into order_item
+	(OrderID, itemID, Quantity, Price)
+values
+	(100, 404, 1, 1200.50), 
+	(101, 411, 1, 470), 
+	(102, 402, 1, 990), 
+	(103, 408, 1, 470.12), 
+	(104, 400, 1, 3000.15), 
+	(105, 406, 1, 789),
+	(106, 401, 1, 255), 
+	(107, 403, 1, 2450),
+	(108, 405, 1, 500),
+	(109, 409, 1, 500.35);
+go
+select *
+from order_item;
+
+----------------------------------------------Entity10-----------------------
+ 
+create table artist_medium(  
+    ArtistID         int,                
+    MediumID         int,
+--constraints
+--primary key
+    constraint artistmedium_artistmediumid_pk primary key(ArtistID, MediumID),
+--foreign keys
+    constraint artistmedium_artistid_fk foreign key (ArtistID) references artist(ArtistID)
+        on update cascade
+        on delete no action,
+    constraint artistmedium_mediumid_fk foreign key (MediumID) references medium(MediumID)
+        on update cascade
+        on delete no action,
+);
+----insert artist medium---
+ 
+insert into artist_medium
+	(ArtistID, MediumID)
+values
+	(8,200), 
+	(9,201),
+	(10,202),
+	(24,203),
+	(25,204),
+	(26,205),
+	(27,206),
+	(28,207),
+	(29,208), 
+	(30,209);
+go
+select *
+from artist_medium;
+
+----------------------------------------------Entity11-----------------------
+ 
+create table exhibit( 
+  ExhibitID         int,
+  Address           char(25)          not null,
+  City              char(20)          not null,
+  State             char(2)           not null           default 'MI',
+  Zip               char(9)           not null,
+  StartDate         Date              not null,
+  EndDate           Date              not null,
+  Name              Varchar(15),
+--constraints
+--primary key
+  constraint exhibit_exhibitid_pk primary key(ExhibitID)
+);
+
+-- alter table statement to change name 'varchar' constraint to 30 because 15 too small 
+ALTER TABLE exhibit ALTER COLUMN name VARCHAR (30);
+
+----Insert exhibit ----
+insert into exhibit
+	(ExhibitID, Address, City, State, Zip, StartDate, EndDate, Name)
+values
+	(1000, '1235 oak ln', 'Southfield', 'MI', '48075', '2022-11-29', '2022-12-15', 'Museum of Modern Art'), 
+	(1001, '457 daisy way', 'Allen Park', 'MI', '48101', '2022-08-15', '2022-09-30', 'Student Art House'),
+	(1002, '2361 Fairfield Ave', 'Lathrup Village', 'MI', '48076', '2022-01-15', '2022-01-17', 'Cultural Expo'),
+	(1003, '1420 Meadowlake', 'Southfield', 'MI', '48075', '2018-02-13', '2018-03-01', 'Lincoln Art College'),
+	(1004, '801 Brookeshire', 'Royal Oak', 'MI', '48068', '2015-04-02', '2018-04-27', 'Fine Art Institute'), 
+	(1005, '9781 Stonebridge', 'Dearborn', 'MI', '48123', '2015-06-01', '2015-06-30', 'Maple Museum'), 
+	(1006, '7321 Capeview ln', 'Livonia', 'MI', '48150', '2016-07-04', '2016-07-08', 'MI Creatives Con'), 
+	(1007, '312 Eaton', 'Ypsilanti', 'MI', '48197', '2022-09-15', '2022-11-01', 'EMU art exhibit'), 
+	(1008, '162 Avalon Dr', 'Livonia', 'MI', '48150', '2022-08-01', '2022-08-09', 'Premble Art'), 
+	(1009, '1341 Milcreek', 'Atlanta', 'GA', '30301', '2019-05-16', '2019-05-27', '3D art Museum');
+
+
+go
+select *
+from exhibit;
+
+----------------------------------------------Entity12-----------------------
+
+create table exhibit_item(  
+  ExhibitID       int,
+  itemID          int, 
+--constraints
+--primary key
+  constraint exhibititem_exhibititemid_pk primary key(ExhibitID, itemID), 
+--foreign keys
+  constraint exhibititem_exhibitid_fk foreign key (exhibitID) references exhibit(exhibitID)
+      on update cascade
+      on delete no action,
+  constraint exhibititem_itemid_fk foreign key (itemID) references item(itemID)
+      on update cascade
+      on delete no action
+);
+
+----------------exhibit item inserts----------
+ 
+insert into exhibit_item
+	(exhibitID, itemID)
+values
+	(1004, 405), 
+	(1002, 406), 
+	(1003, 409),
+	(1007, 401), 
+	(1008, 410),
+	(1001, 407),
+	(1006, 411),
+	(1009, 404), 
+	(1000, 408),
+	(1005, 403);
+
+	
+go
+select *
+from exhibit_item;
+
+
+/* queries */
+
+ 
+--i am creating a quary that shows the (first name) and (last name) of the customers with the (name) of the item the (price) of the item and the (description) of the item, I will group the price of the item to show the sum of the price each customer payed and the price should be 500 or more and order the quary by the highest price of the item to the lowest price of the item
+select firstname as [First Name]
+	  ,lastname as [Last Name]
+	  ,i.name as [Art Piece]
+	  ,sum(i.price) as [Price] 
+	  ,i.Description
+from person p join customer c
+on p.personid = c.CustomerID
+join customerorder co
+on c.CustomerID = co.CustomerID
+join order_item oi
+on co.OrderID = oi.orderID
+join item i
+on oi.itemID = i.itemID
+group by firstname ,lastname,i.name ,i.Description
+having sum(i.price) >= '500'
+order by sum(i.price) desc;
+
+
+ 
+--i created a quary that will show the (person id), (firstname), (lastname), (city), (Address), (Zip), (State), (PhoneNum), (Email) and (PersonType) and then create a sub quary that has a sort to filter out all people except the people which city is macomb
+ 
+select PersonID as [ID]
+	  ,firstname as [First Name]
+	  ,lastname as [Last Name]
+	  ,city as [City]
+	  ,Address as [Address]
+	  ,Zip as [Zip]
+	  ,State as [State]
+	  ,PhoneNum as [Phone]
+	  ,Email as [Email]
+	  ,PersonType as [Customer or Employee]
+from person p right join employee e
+on p.PersonID = e.EmployeeID
+where city = all
+				(select city
+				from person
+				where city in ('macomb'))
+except
+select PersonID
+	  ,firstname
+	  ,lastname
+	  ,city
+	  ,Address
+	  ,Zip
+	  ,State
+	  ,PhoneNum
+	  ,Email
+	  ,PersonType
+from person p right join customer c
+on p.PersonID = c.CustomerID;
+
+
+
+
+
+
+
+
